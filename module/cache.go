@@ -1,4 +1,4 @@
-package main
+package module
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func createCacheDotFolder() {
+func CreateCacheDotFolder() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)

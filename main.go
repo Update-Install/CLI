@@ -6,6 +6,8 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
+
+	"ui/cli/commands"
 )
 
 func main() {
@@ -20,6 +22,15 @@ func main() {
 				Usage:   "Version of CLI",
 				Action: func(ctx *cli.Context) error {
 					fmt.Println(ctx.App.Version)
+					return nil
+				},
+			},
+			{
+				Name:    "install",
+				Aliases: []string{"i"},
+				Usage:   "Install package",
+				Action: func(ctx *cli.Context) error {
+					commands.Install(ctx)
 					return nil
 				},
 			},
