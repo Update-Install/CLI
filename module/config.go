@@ -2,7 +2,6 @@ package module
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -43,10 +42,12 @@ func CreateConfigFile() {
 	}
 }
 
-func GetConfigs() {
+func GetConfigs() (ConfigFileJSON, error) {
+	var config ConfigFileJSON
+
 	home, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatal(err)
+		return config, err
 	}
 
 	CreateConfigFile()
@@ -55,22 +56,17 @@ func GetConfigs() {
 
 	configFile, err := os.Open(configFilePath)
 	if err != nil {
-		log.Fatal(err)
-		return
+		return config, err
 	}
 
 	// Read the config file
 	configFileBytes, err := io.ReadAll(configFile)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return config, err
 	}
-	var config ConfigFileJSON
 	if err := json.Unmarshal(configFileBytes, &config); err != nil {
-		fmt.Println(err)
-		return
+		return config, err
 	}
 
-	// Print the config
-	fmt.Println(config)
+	return config, nil
 }
