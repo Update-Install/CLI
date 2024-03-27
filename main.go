@@ -34,6 +34,15 @@ func main() {
 					return nil
 				},
 			},
+			{
+				Name:    "config",
+				Aliases: []string{"c"},
+				Usage:   "Read the config of user",
+				Action: func(ctx *cli.Context) error {
+					commands.Config(ctx)
+					return nil
+				},
+			},
 		},
 	}
 
