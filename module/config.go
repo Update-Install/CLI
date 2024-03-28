@@ -78,14 +78,15 @@ func SetFileURLConfigs(name string, URL string) (ConfigFileJSON, error) {
 		return config, err
 	}
 
-	for _, file := range config.Files {
+	for i, file := range config.Files {
 		if file.Name == name {
 			fmt.Printf("The URL of the name is already exist. Would you like to change the URL of %s? (y/n) ", name)
 			var answer string
 			fmt.Scanln(&answer)
 
 			if answer == "y" || answer == "Y" {
-				file.URL = URL
+				config.Files[i].URL = URL
+				return config, nil
 			} else {
 				fmt.Println("No changes were made")
 				return config, nil
