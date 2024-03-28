@@ -2,6 +2,7 @@ package module
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -71,15 +72,31 @@ func GetConfigs() (ConfigFileJSON, error) {
 	return config, nil
 }
 
-func SetFileURLConfigs(name string, URL string) error {
+func SetFileURLConfigs(name string, URL string) (ConfigFileJSON, error) {
 	config, err := GetConfigs()
 	if err != nil {
-		return err
+		return config, err
 	}
 
+	for _, file := range config.Files {
+		if file.Name == name {
+			fmt.Printf("The URL of the name is already exist. Would you like to change the URL of %s? (y/n) ", name)
+			var answer string
+			fmt.Scanln(&answer)
+
+			if answer == "y" || answer == "Y" {
+				file.URL = URL
+			} else {
+				fmt.Println("No changes were made")
+				return config, nil
+			}
+		}
+	}
+
+	// append new file
 	config.Files = append(config.Files, FileLink{Name: name, URL: URL})
 
-	return nil
+	return config, nil
 }
 
 func SaveToConfigFile(config ConfigFileJSON) error {

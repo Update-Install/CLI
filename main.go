@@ -38,6 +38,18 @@ func main() {
 				Name:    "config",
 				Aliases: []string{"c"},
 				Usage:   "Read the config of user",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "name",
+						Aliases: []string{"n"},
+						Usage:   "Name of the file",
+					},
+					&cli.StringFlag{
+						Name:    "url",
+						Aliases: []string{"u"},
+						Usage:   "URL of the file",
+					},
+				},
 				Action: func(ctx *cli.Context) error {
 					commands.Config(ctx)
 					return nil
