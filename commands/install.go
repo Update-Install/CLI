@@ -3,6 +3,8 @@ package commands
 import (
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/urfave/cli/v2"
 
@@ -10,6 +12,11 @@ import (
 )
 
 func Install(*cli.Context) {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	module.CreateCacheDotFolder()
 	config, err := module.GetConfigs()
 	if err != nil {
@@ -19,5 +26,15 @@ func Install(*cli.Context) {
 	for _, file := range config.Files {
 		fmt.Println(file.Name + " Downloading... " + " " + file.URL)
 		module.DownloadFileToCache(file.URL)
+	}
+
+	fmt.Println("Download complete!")
+
+	for _, file := range config.Files {
+		fmt.Println("Installing... " + file.Name)
+		err := module.InstallPackageWithFilePath(home + "/.ui/cache/" + filepath.Base(file.URL))
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
