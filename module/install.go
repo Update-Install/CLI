@@ -53,8 +53,14 @@ func InstallPackageWithFilePath(filePath string) error {
 		return nil
 	}
 
+	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	cmd.Run()
+	err := cmd.Run()
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
