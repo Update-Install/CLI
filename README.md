@@ -9,6 +9,7 @@ Easy way to install package for LInux Distributions<br>
 `ui config` show the config file of ui  
 `ui config -n {name} -u {URL}` set a source for a package  
 `ui install` download the package file in config file's list then install it.
+`ui install -n {name}` download and install the specific package
 
 # Installation
 ## Build from source
@@ -49,3 +50,8 @@ ui config -n discord -u https://discord.com/api/download?platform=linux&format=d
 ```bash
 ui install
 ```
+
+**Step 3.** Install the specific package with package name in config
+```bash
+ui install --name discord
+``` 
