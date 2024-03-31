@@ -30,8 +30,8 @@ Then just add the executable file to PATH
 
 ## Install Pre-build file with script
 ```bash
-wget https://github.com/Update-Install/CLI/releases/download/v0.1.0/ui-cli_0.1.0_linux_amd64.tar.gz
-tar -xvf ui-cli_0.1.0_linux_amd64.tar.gz
+wget https://github.com/Update-Install/CLI/releases/download/v0.2.0/ui-cli_0.2.0_linux_amd64.tar.gz
+tar -xvf ui-cli_0.2.0_linux_amd64.tar.gz
 sudo cp ui /usr/local/bin
 ```
 
