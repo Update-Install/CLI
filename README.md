@@ -33,3 +33,19 @@ wget https://github.com/Update-Install/CLI/releases/download/v0.1.0/ui-cli_0.1.0
 tar -xvf ui-cli_0.1.0_linux_amd64.tar.gz
 sudo cp ui /usr/local/bin
 ```
+
+# Example
+## Ubuntu
+This is example is tested on Ubuntu 23.10
+
+**Step 1.** Add the link to config using `ui config` command
+
+```bash
+ui config -n discord -u https://discord.com/api/download?platform=linux&format=deb
+```
+
+**Step 2.** Install the all packages in config
+
+```bash
+ui install
+```
