@@ -8,7 +8,7 @@ Easy way to install package for LInux Distributions<br>
 `ui --help` show command information  
 `ui config` show the config file of ui  
 `ui config -n {name} -u {URL}` set a source for a package  
-`ui install` download the package file in config file's list then install it.
+`ui install` download the package file in config file's list then install it.  
 `ui install -n {name}` download and install the specific package
 
 # Installation
