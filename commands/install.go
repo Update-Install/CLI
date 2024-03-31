@@ -1,22 +1,16 @@
 package commands
 
 import (
-	"fmt"
 	"log"
-	"os"
 	"path/filepath"
 
+	"github.com/gookit/color"
 	"github.com/urfave/cli/v2"
 
 	"ui/cli/module"
 )
 
 func Install(c *cli.Context) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	module.CreateCacheDotFolder()
 	config, err := module.GetConfigs()
 	if err != nil {
@@ -27,28 +21,26 @@ func Install(c *cli.Context) {
 	if packageName != "" {
 		for _, file := range config.Files {
 			if file.Name == packageName {
-				installPackage(home, file.URL)
+				filePath := module.DownloadFileToCache(file.URL)
+				installPackage(filePath)
 				return
 			}
 		}
+	} else {
 		log.Fatal("Package not found")
-	}
-
-	for _, file := range config.Files {
-		fmt.Println(file.Name + " Downloading... " + file.URL)
-		module.DownloadFileToCache(file.URL)
-	}
-
-	fmt.Println("Download complete!")
-	for _, file := range config.Files {
-		installPackage(home, file.URL)
 	}
 }
 
-func installPackage(home, filePath string) {
+func installPackage(filePath string) {
 	fileName := filepath.Base(filePath)
-	err := module.InstallPackageWithFilePath(home + "/.ui/cache/" + fileName)
+
+	color.Yellowln("Installing", fileName)
+	module.FullWidthMessage("installation log start", color.Gray)
+	err := module.InstallPackageWithFilePath(filePath)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	module.FullWidthMessage("installation log end", color.Gray)
+	color.Greenln("Successfully installed", fileName)
 }
