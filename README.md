@@ -30,14 +30,14 @@ Then just add the executable file to PATH
 
 ## Install Pre-build file with script
 ```bash
-wget https://github.com/Update-Install/CLI/releases/download/v0.2.0/ui-cli_0.2.0_linux_amd64.tar.gz
-tar -xvf ui-cli_0.2.0_linux_amd64.tar.gz
+wget https://github.com/Update-Install/CLI/releases/download/v0.3.0/ui-cli_0.3.0_linux_amd64.tar.gz
+tar -xvf ui-cli_0.3.0_linux_amd64.tar.gz
 sudo cp ui /usr/local/bin
 ```
 
 # Example
 ## Ubuntu
-This is example is tested on Ubuntu 23.10
+This is example had been tested on Ubuntu 23.10
 
 **Step 1.** Add the link to config using `ui config` command
 

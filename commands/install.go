@@ -23,34 +23,32 @@ func Install(c *cli.Context) {
 		log.Fatal(err)
 	}
 
-	if name := c.String("name"); name != "" {
-		// finding the name in file list
+	packageName := c.String("name")
+	if packageName != "" {
 		for _, file := range config.Files {
-			if file.Name == name {
-				fmt.Println("Installing... " + name)
-				err := module.InstallPackageWithFilePath(home + "/.ui/cache/" + filepath.Base(file.URL))
-				if err != nil {
-					log.Fatal(err)
-				}
+			if file.Name == packageName {
+				installPackage(home, file.URL)
 				return
 			}
 		}
 		log.Fatal("Package not found")
-		return
 	}
 
 	for _, file := range config.Files {
-		fmt.Println(file.Name + " Downloading... " + " " + file.URL)
+		fmt.Println(file.Name + " Downloading... " + file.URL)
 		module.DownloadFileToCache(file.URL)
 	}
 
 	fmt.Println("Download complete!")
-
 	for _, file := range config.Files {
-		fmt.Println("Installing... " + file.Name)
-		err := module.InstallPackageWithFilePath(home + "/.ui/cache/" + filepath.Base(file.URL))
-		if err != nil {
-			log.Fatal(err)
-		}
+		installPackage(home, file.URL)
+	}
+}
+
+func installPackage(home, filePath string) {
+	fileName := filepath.Base(filePath)
+	err := module.InstallPackageWithFilePath(home + "/.ui/cache/" + fileName)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
