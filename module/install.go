@@ -40,6 +40,12 @@ func InstallPackageWithFilePath(filePath string) error {
 		cmd = exec.Command("sudo", "dpkg", "-i", filePath)
 	case "arch":
 		cmd = exec.Command("sudo", "pacman", "-U", filePath)
+	case "manjaro":
+		cmd = exec.Command("sudo", "pacman", "-U", filePath)
+	case "fedora":
+		cmd = exec.Command("sudo", "dnf", "install", "-y", filePath)
+	case "rhel":
+		cmd = exec.Command("sudo", "yum", "install", "-y", filePath)
 	case "centos":
 		cmd = exec.Command("sudo", "yum", "install", "-y", filePath)
 	default:
