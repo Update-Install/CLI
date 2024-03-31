@@ -36,12 +36,14 @@ func InstallPackageWithFilePath(filePath string) error {
 	switch distro {
 	case "debian":
 		cmd = exec.Command("sudo", "dpkg", "-i", filePath)
+	case "ubuntu":
+		cmd = exec.Command("sudo", "dpkg", "-i", filePath)
 	case "arch":
 		cmd = exec.Command("sudo", "pacman", "-U", filePath)
 	case "centos":
 		cmd = exec.Command("sudo", "yum", "install", "-y", filePath)
 	default:
-		fmt.Println("Unknown distribution")
+		fmt.Println("Update-Install CLI have not supported on this distribution")
 		return nil
 	}
 
