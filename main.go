@@ -29,6 +29,13 @@ func main() {
 				Name:    "install",
 				Aliases: []string{"i"},
 				Usage:   "Install package",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "name",
+						Aliases: []string{"n"},
+						Usage:   "Name of the file to install",
+					},
+				},
 				Action: func(ctx *cli.Context) error {
 					commands.Install(ctx)
 					return nil
