@@ -24,7 +24,7 @@ git clone https://github.com/Update-Install/CLI.git
 Install packages and build
 ```
 go install
-go build . -o ui
+go build -o ui
 ```
 Then just add the executable file to PATH
 
