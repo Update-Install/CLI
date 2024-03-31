@@ -1,9 +1,7 @@
 package module
 
 import (
-	"io"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
 )
@@ -37,23 +35,7 @@ func DownloadFileToCache(url string) string {
 		}
 	}
 
-	file, err := os.Create(filepath.Join(cachePath, filepath.Base(url)))
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
+	fileName := Download(url, cachePath)
 
-	resp, err := http.Get(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-
-	_, err = io.Copy(file, resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return file.Name()
-
+	return fileName
 }
