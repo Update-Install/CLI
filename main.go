@@ -12,9 +12,10 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name:    "UI-CLI",
-		Usage:   "A app install/update tool for Linux",
-		Version: "v0.2.0",
+		Name:     "UI-CLI",
+		HelpName: "ui",
+		Usage:    "A app install/update tool for Linux",
+		Version:  "v0.2.0",
 		Commands: []*cli.Command{
 			{
 				Name:    "version",
