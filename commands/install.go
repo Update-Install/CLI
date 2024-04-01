@@ -26,8 +26,12 @@ func Install(c *cli.Context) {
 				return
 			}
 		}
-	} else {
 		log.Fatal("Package not found")
+	}
+
+	for _, file := range config.Files {
+		filePath := module.DownloadFileToCache(file.URL)
+		installPackage(filePath)
 	}
 }
 
