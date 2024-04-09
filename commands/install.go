@@ -17,7 +17,7 @@ func Install(c *cli.Context) {
 		log.Fatal(err)
 	}
 
-	packageName := c.String("name")
+	packageName := c.Args().Get(0)
 	if packageName != "" {
 		for _, file := range config.Files {
 			if file.Name == packageName {
