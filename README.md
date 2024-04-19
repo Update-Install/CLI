@@ -30,7 +30,7 @@ Then just add the executable file to PATH
 
 ## Install Pre-build file with script
 ```bash
-sudo wget https://github.com/Update-Install/CLI/releases/latest/download/ui-cli_linux_amd64 -O /usr/local/bin/ui
+sudo wget https://github.com/Update-Install/CLI/releases/latest/download/ui-cli_linux_amd64 -q --show-progress --progress=bar:force -O /usr/local/bin/ui
 ```
 
 # Example
