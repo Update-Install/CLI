@@ -27,7 +27,7 @@ go build -ldflags "-w" -o ./dist/ui
 ```
 
 You can compress the executable file with `upx` pack tool to make it smaller.
-> Get the `upx` tool from [the npx release page](https://github.com/upx/upx/releases/latest)
+> Get the `upx` tool from [the upx release page](https://github.com/upx/upx/releases/latest)
 ```bash
 upx --best --lzma ./dist/ui
 ```
