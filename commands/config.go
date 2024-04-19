@@ -1,10 +1,10 @@
 package commands
 
 import (
-	"fmt"
 	"log"
 	"ui/cli/module"
 
+	"github.com/gookit/color"
 	"github.com/urfave/cli/v2"
 )
 
@@ -16,7 +16,11 @@ func Config(c *cli.Context) {
 			log.Fatal(err)
 		}
 
-		fmt.Println(config)
+		for _, file := range config.Files {
+			color.Cyanf("%s: ", file.Name)
+			color.Greenln(file.URL)
+		}
+
 		return
 	}
 
