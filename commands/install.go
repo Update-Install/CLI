@@ -2,6 +2,7 @@ package commands
 
 import (
 	"log"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/gookit/color"
@@ -11,6 +12,13 @@ import (
 )
 
 func Install(c *cli.Context) {
+	var cmd = exec.Command("sudo", "-v")
+	cmd.Stdout = nil
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	module.CreateCacheDotFolder()
 	config, err := module.GetConfigs()
 	if err != nil {
