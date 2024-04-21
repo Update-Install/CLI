@@ -20,21 +20,22 @@ func main() {
 			{
 				Name:    "version",
 				Aliases: []string{"v"},
-				Usage:   "Version of CLI",
+				Usage:   "show the version of ui",
 				Action: func(ctx *cli.Context) error {
 					fmt.Println(ctx.App.Version)
 					return nil
 				},
 			},
 			{
-				Name:    "install",
-				Aliases: []string{"i"},
-				Usage:   "Install package",
+				Name:        "install",
+				Aliases:     []string{"i"},
+				Usage:       "install or update packages",
+				Description: "If no package name is specified, it will install all packages in configured source.",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:    "name",
 						Aliases: []string{"n"},
-						Usage:   "Name of the file to install",
+						Usage:   "name of the file to install",
 					},
 				},
 				Action: func(ctx *cli.Context) error {
@@ -43,23 +44,29 @@ func main() {
 				},
 			},
 			{
-				Name:    "config",
-				Aliases: []string{"c"},
-				Usage:   "Read the config of user",
+				Name:        "source",
+				Aliases:     []string{"s"},
+				Usage:       "manage source of package",
+				Description: "If no options are specified, it will list all sources of package on local machine.",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "list",
+						Aliases: []string{"ls"},
+						Usage:   "list sources of package on local machine",
+					},
 					&cli.StringFlag{
 						Name:    "name",
 						Aliases: []string{"n"},
-						Usage:   "Name of the file",
+						Usage:   "package name of the source",
 					},
 					&cli.StringFlag{
 						Name:    "url",
 						Aliases: []string{"u"},
-						Usage:   "URL of the file",
+						Usage:   "url of the source",
 					},
 				},
 				Action: func(ctx *cli.Context) error {
-					commands.Config(ctx)
+					commands.Source(ctx)
 					return nil
 				},
 			},
