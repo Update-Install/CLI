@@ -23,13 +23,13 @@ Install dependencies and build.
 go install
 
 # Build the executable
-go build -ldflags "-w" -o ./dist/ui
+go build -ldflags "-w" -o ./dist/ui-cli_linux_amd64
 ```
 
 You can compress the executable file with `upx` pack tool to make it smaller.
 > Get the `upx` tool from [the upx release page](https://github.com/upx/upx/releases/latest)
 ```bash
-upx --best --lzma ./dist/ui
+upx --best --lzma ./dist/ui-cli_linux_amd64
 ```
 
 Then copy the executable file to `/usr/local/bin`
