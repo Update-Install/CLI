@@ -14,7 +14,7 @@ func main() {
 	app := &cli.App{
 		Name:     "UI-CLI",
 		HelpName: "ui",
-		Usage:    "A app install/update tool for Linux",
+		Usage:    "Simple tool for installing deb package for LInux Distributions.",
 		Version:  "v0.6.0",
 		Commands: []*cli.Command{
 			{
