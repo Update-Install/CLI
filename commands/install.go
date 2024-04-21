@@ -20,14 +20,14 @@ func Install(c *cli.Context) {
 	}
 
 	module.CreateCacheDotFolder()
-	config, err := module.GetConfigs()
+	config, err := module.GetSource()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	packageName := c.Args().Get(0)
 	if packageName != "" {
-		for _, file := range config.Files {
+		for _, file := range config.Source {
 			if file.Name == packageName {
 				filePath := module.DownloadFileToCache(file.URL)
 				installPackage(filePath)
@@ -37,7 +37,7 @@ func Install(c *cli.Context) {
 		log.Fatal("Package not found")
 	}
 
-	for _, file := range config.Files {
+	for _, file := range config.Source {
 		filePath := module.DownloadFileToCache(file.URL)
 		installPackage(filePath)
 	}

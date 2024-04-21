@@ -9,13 +9,13 @@ import (
 	"path/filepath"
 )
 
-type FileLink struct {
+type SourceObject struct {
 	Name string `json:"name"`
 	URL  string `json:"url"`
 }
 
-type ConfigFileJSON struct {
-	Files []FileLink `json:"files"`
+type SourceJSON struct {
+	Source []SourceObject `json:"source"`
 }
 
 func CreateConfigFile() {
@@ -43,8 +43,8 @@ func CreateConfigFile() {
 	}
 }
 
-func GetConfigs() (ConfigFileJSON, error) {
-	var config ConfigFileJSON
+func GetSource() (SourceJSON, error) {
+	var config SourceJSON
 
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -72,20 +72,20 @@ func GetConfigs() (ConfigFileJSON, error) {
 	return config, nil
 }
 
-func SetFileURLConfigs(name string, URL string) (ConfigFileJSON, error) {
-	config, err := GetConfigs()
+func SetSource(name string, URL string) (SourceJSON, error) {
+	config, err := GetSource()
 	if err != nil {
 		return config, err
 	}
 
-	for i, file := range config.Files {
+	for i, file := range config.Source {
 		if file.Name == name {
-			fmt.Printf("The URL of the name is already exist. Would you like to change the URL of %s? (y/n) ", name)
+			fmt.Printf("The URL of the name is already exist. Would you like to change the URL of %s? (y/N) ", name)
 			var answer string
 			fmt.Scanln(&answer)
 
 			if answer == "y" || answer == "Y" {
-				config.Files[i].URL = URL
+				config.Source[i].URL = URL
 				return config, nil
 			} else {
 				fmt.Println("No changes were made")
@@ -95,12 +95,12 @@ func SetFileURLConfigs(name string, URL string) (ConfigFileJSON, error) {
 	}
 
 	// append new file
-	config.Files = append(config.Files, FileLink{Name: name, URL: URL})
+	config.Source = append(config.Source, SourceObject{Name: name, URL: URL})
 
 	return config, nil
 }
 
-func SaveToConfigFile(config ConfigFileJSON) error {
+func SaveToConfigFile(config SourceJSON) error {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return err
