@@ -34,7 +34,7 @@ upx --best --lzma ./dist/ui-cli_linux_amd64
 
 Then copy the executable file to `/usr/local/bin`
 ```bash
-sudo cp ./dist/ui /usr/local/bin/ui
+sudo cp ./dist/ui-cli_linux_amd64 /usr/local/bin/ui
 ```
 
 ## Install Pre-build file with script
