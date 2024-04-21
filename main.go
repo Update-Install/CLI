@@ -70,6 +70,15 @@ func main() {
 					return nil
 				},
 			},
+			{
+				Name:    "update-self",
+				Aliases: []string{"us"},
+				Usage:   "update ui-cli to the latest version",
+				Action: func(ctx *cli.Context) error {
+					commands.UpdateSelf(ctx)
+					return nil
+				},
+			},
 		},
 	}
 
