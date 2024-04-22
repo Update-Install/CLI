@@ -9,7 +9,8 @@ Never struggle with download links again.<br>
 # Installation
 ## Build from source
 ### Requirements
-- Go (1.22)
+- [Go (1.22)](https://go.dev/doc/install)
+- [upx](https://github.com/upx/upx/releases/latest)
 
 ### Installation Steps
 Download the source files.
@@ -17,19 +18,9 @@ Download the source files.
 git clone https://github.com/Update-Install/CLI.git
 ```
 
-Install dependencies and build.
+Run the build script.
 ```bash
-# Install dependencies
-go install
-
-# Build the executable
-go build -ldflags "-w" -o ./dist/ui-cli_linux_amd64_uncompressed
-```
-
-You can compress the executable file with `upx` pack tool to make it smaller.
-> Get the `upx` tool from [the upx release page](https://github.com/upx/upx/releases/latest)
-```bash
-upx --best --lzma ./dist/ui-cli_linux_amd64_uncompressed -o ./dist/ui-cli_linux_amd64
+./build.sh
 ```
 
 Then copy the executable file to `/usr/local/bin`
