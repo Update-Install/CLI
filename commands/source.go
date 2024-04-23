@@ -9,7 +9,7 @@ import (
 )
 
 func Source(c *cli.Context) {
-	if c.Args().Get(0) != "list" || (c.String("name") == "") || (c.String("url") == "") {
+	if c.Args().Get(0) == "list" || (c.String("name") == "") || (c.String("url") == "") {
 		config, err := module.GetSource()
 		if err != nil {
 			log.Fatal(err)
