@@ -50,11 +50,6 @@ func main() {
 				Description: "If no options are specified, it will list all sources of package on local machine.",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:    "list",
-						Aliases: []string{"ls"},
-						Usage:   "list sources of package on local machine",
-					},
-					&cli.StringFlag{
 						Name:    "name",
 						Aliases: []string{"n"},
 						Usage:   "package name of the source",
