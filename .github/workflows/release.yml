@@ -1,0 +1,98 @@
+name: Release
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  check:
+    name: Check commit message
+    runs-on: ubuntu-latest
+    outputs:
+      commit_message: ${{ steps.check_commit_message.outputs.commit_message }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Check commit message
+      id: check_commit_message
+      run: |
+        commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
+        if [[ $commit_message =~ ^v[0-9]+\.[0-9]+\.[0-9] ]]; then
+          echo "Commit message matches version format."
+          echo "commit_message=$commit_message" >> "$GITHUB_OUTPUT"
+        else
+          echo "Commit message does not match version format. Skipping release."
+        fi
+
+  build:
+    name: Build and compress binary
+    needs: [check]
+    if: ${{ needs.check.outputs.commit_message != '' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - run: mkdir -p dist
+
+    - name: Build binary
+      run: |
+        go build -ldflags "-s -w" -o dist/ui-cli_linux_amd64_uncompressed
+
+    - name: Compress binary
+      run: |
+        upx -f --best --lzma dist/ui-cli_linux_amd64_uncompressed -o dist/ui-cli_linux_amd64
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: ui-cli
+        path: dist
+
+  release:
+    name: Create release and upload asset
+    needs: [check, build]
+    if: ${{ needs.check.outputs.commit_message != '' }}
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@master
+      with:
+        name: ui-cli
+        path: dist
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ needs.check.outputs.commit_message }}
+        release_name: 🎉 Release ${{ needs.check.outputs.commit_message }}
+        body: |
+          This release was automatically created by GitHub Actions.
+
+          Please refer to [readme](https://github.com/Update-Install/cli/blob/main/README.md) for more details.
+        draft: false
+        prerelease: false
+
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/ui-cli_linux_amd64
+        asset_name: ui-cli_linux_amd64
+        asset_content_type: application/octet-stream
+
+    - name: Delete artifact
+      uses: geekyeggo/delete-artifact@v5
+      with:
+          name: ui-cli
