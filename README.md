@@ -36,8 +36,8 @@ sudo wget https://github.com/Update-Install/CLI/releases/latest/download/ui-cli_
 # Usage
 ## Commands
 `ui --help` show command information  
-`ui config` show the config file of ui  
-`ui config -n {name} -u {URL}` set a source for a package  
+`ui source` show the config file of ui  
+`ui source -n {name} -u {URL}` set a source for a package  
 `ui install` download the package file in config file's list then install it.  
 `ui install {name}` download and install the specific package
 
@@ -47,7 +47,7 @@ This is example had been tested on Ubuntu 23.10, 22.04
 **Step 1.** Add the link to config using `ui config` command
 
 ```bash
-ui config -n discord -u https://discord.com/api/download?platform=linux&format=deb
+ui source -n discord -u https://discord.com/api/download?platform=linux&format=deb
 ```
 
 **Step 2.** Install the all packages in config
