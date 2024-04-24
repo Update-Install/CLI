@@ -1,11 +1,3 @@
-<div align="center">
-<h1>Update Install</h1>
-Easy way to install deb package for LInux Distributions.<br>
-Never struggle with download links again.<br>
-<h3><code>ui install</code></h3>
-<br>
-</div>
-
 # Installation
 ## Build from source
 ### Requirements
