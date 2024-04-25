@@ -10,7 +10,7 @@ Please refers to the [installation guide](https://github.com/Update-Install?view
 ### Installation Steps
 Download the source files.
 ```bash
-git clone https://github.com/Update-Install/CLI.git
+git clone https://github.com/Update-Install/cli.git
 ```
 
 Run the build script.
