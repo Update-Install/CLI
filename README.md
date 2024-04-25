@@ -1,4 +1,7 @@
 # Installation
+## Install Pre-built Version
+Please refers to the [installation guide](https://github.com/Update-Install?view_as=public#installation) to install pre-built version of Update Install.
+
 ## Build From Source
 ### Requirements
 - [Go (1.22)](https://go.dev/doc/install)
@@ -19,9 +22,6 @@ Then copy the executable file to `/usr/local/bin`
 ```bash
 sudo cp ./dist/ui-cli_linux_amd64 /usr/local/bin/ui
 ```
-
-## Install Pre-built Version
-Please refers to the [installation guide](https://github.com/Update-Install?view_as=public#installation) to install pre-built version of Update Install.
 
 # Usage
 
