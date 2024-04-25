@@ -37,18 +37,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - run: mkdir -p dist
+    - name: Create necessary directory
+      run: |
+        mkdir -p dist
 
     - name: Build binary
       run: |
-        go build -ldflags "-s -w" -o dist/ui-cli_linux_amd64_uncompressed
+        go build -ldflags "-s -w" -o dist/ui-cli_linux_amd64
 
     - name: Compress binary
       run: |
-        upx -f --best --lzma dist/ui-cli_linux_amd64_uncompressed -o dist/ui-cli_linux_amd64
+        upx -f --best --lzma dist/ui-cli_linux_amd64
 
     - name: Upload artifact
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v4
       with:
         name: ui-cli
         path: dist
@@ -62,35 +64,23 @@ jobs:
 
     steps:
     - name: Download artifact
-      uses: actions/download-artifact@master
+      uses: actions/download-artifact@v4
       with:
         name: ui-cli
         path: dist
 
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create release and upload asset
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ needs.check.outputs.commit_message }}
-        release_name: 🎉 Release ${{ needs.check.outputs.commit_message }}
+        name: 🎉 Release ${{ needs.check.outputs.commit_message }}
         body: |
-          This release was automatically created by GitHub Actions.
-
-          Please refer to [readme](https://github.com/Update-Install/cli/blob/main/README.md) for more details.
-        draft: false
-        prerelease: false
-
-    - name: Upload release asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: dist/ui-cli_linux_amd64
-        asset_name: ui-cli_linux_amd64
-        asset_content_type: application/octet-stream
+          Please follow the [installation guide](https://github.com/Update-Install?view_as=public#installation) to install the latest version of Update Install.
+        generate_release_notes: true
+        append_body: true
+        make_latest: "true"
+        files: |
+          dist/ui-cli_linux_amd64
 
     - name: Delete artifact
       uses: geekyeggo/delete-artifact@v5
