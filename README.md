@@ -18,9 +18,14 @@ Run the build script.
 ./build.sh
 ```
 
-Then copy the executable file to `/usr/local/bin`
+Then copy the executable file to `/usr/local/bin`.
 ```bash
 sudo cp ./dist/ui-cli_linux_amd64 /usr/local/bin/ui
+```
+
+Grant execute permission for `/usr/local/bin/ui`.
+```bash
+sudo chmod +x /usr/local/bin/ui
 ```
 
 # Usage
