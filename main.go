@@ -15,7 +15,7 @@ func main() {
 		Name:     "UI-CLI",
 		HelpName: "ui",
 		Usage:    "Simple tool for installing deb package for LInux Distributions.",
-		Version:  "v0.7.3",
+		Version:  "v0.7.4",
 		Commands: []*cli.Command{
 			{
 				Name:    "version",
