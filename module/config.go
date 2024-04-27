@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/gookit/color"
 )
 
 type SourceObject struct {
@@ -18,13 +19,12 @@ type SourceJSON struct {
 	Source []SourceObject `json:"source"`
 }
 
-func CreateConfigFile() {
+func CreateConfigFile() error {
 	home, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
-	// create dot folder if it is not exist.
 	CreateCacheDotFolder()
 
 	path := filepath.Join(home, ".ui")
@@ -33,14 +33,15 @@ func CreateConfigFile() {
 	if os.IsNotExist(err) {
 		file, err := os.Create(configPath)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		defer file.Close()
 		_, err = file.WriteString("{}")
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
+	return nil
 }
 
 func GetSource() (SourceJSON, error) {
@@ -51,7 +52,10 @@ func GetSource() (SourceJSON, error) {
 		return config, err
 	}
 
-	CreateConfigFile()
+	err = CreateConfigFile()
+	if err != nil {
+		return config, err
+	}
 
 	configFilePath := filepath.Join(home, ".ui", "config.json")
 
@@ -80,7 +84,7 @@ func SetSource(name string, URL string) (SourceJSON, error) {
 
 	for i, file := range config.Source {
 		if file.Name == name {
-			fmt.Printf("The URL of the name is already exist. Would you like to change the URL of %s? (y/N) ", name)
+			color.Yellowf("The URL of the name is already exist. Would you like to change the URL of %s? (y/N) ", name)
 			var answer string
 			fmt.Scanln(&answer)
 
@@ -88,7 +92,7 @@ func SetSource(name string, URL string) (SourceJSON, error) {
 				config.Source[i].URL = URL
 				return config, nil
 			} else {
-				fmt.Println("No changes were made")
+				color.Redln("No changes were made.")
 				return config, nil
 			}
 		}

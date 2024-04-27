@@ -2,21 +2,21 @@ package commands
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
-	"ui/cli/module"
 
 	"github.com/gookit/color"
 	"github.com/urfave/cli/v2"
+
+	"ui/cli/module"
 )
 
-func UpdateSelf(c *cli.Context) {
+func UpdateSelf(c *cli.Context) error {
 	var cmd = exec.Command("sudo", "-v")
 	cmd.Stdout = nil
 	err := cmd.Run()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	color.Yellowln("Updating ui-cli")
@@ -30,17 +30,17 @@ func UpdateSelf(c *cli.Context) {
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
-	fmt.Println("Moved", filePath, "to /usr/local/bin")
+	color.Greenln("Moved", filePath, "to /usr/local/bin")
 	cmd = exec.Command("sudo", "chmod", "+x", "/usr/local/bin/ui")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
-	fmt.Println("Changed permission for /usr/local/bin/ui")
+	color.Greenln("Changed permission for /usr/local/bin/ui")
 	module.FullWidthMessage("installation log end", color.Gray)
 
 	color.Greenf("Successfully updated ui-cli to ")
@@ -49,6 +49,7 @@ func UpdateSelf(c *cli.Context) {
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	return nil
 }

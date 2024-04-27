@@ -1,23 +1,22 @@
 package commands
 
 import (
-	"log"
-	"ui/cli/module"
-
 	"github.com/gookit/color"
 	"github.com/urfave/cli/v2"
+
+	"ui/cli/module"
 )
 
-func Source(c *cli.Context) {
+func Source(c *cli.Context) error {
 	if c.Args().Get(0) == "list" || (c.String("name") == "") || (c.String("url") == "") {
 		config, err := module.GetSource()
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 
 		if len(config.Source) == 0 {
-			color.Yellowln("No files are installed.")
-			return
+			color.Yellowln("There are no package in source.")
+			return nil
 		}
 
 		for _, file := range config.Source {
@@ -25,13 +24,14 @@ func Source(c *cli.Context) {
 			color.Greenln(file.URL)
 		}
 
-		return
+		return nil
 	}
 
 	config, err := module.SetSource(c.String("name"), c.String("url"))
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	module.SaveToConfigFile(config)
+	return nil
 }

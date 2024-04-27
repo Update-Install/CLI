@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"os"
+	"strconv"
 
+	"github.com/gookit/color"
 	"github.com/urfave/cli/v2"
 
 	"ui/cli/commands"
@@ -21,10 +21,7 @@ func main() {
 				Name:    "version",
 				Aliases: []string{"v"},
 				Usage:   "show the version of ui",
-				Action: func(ctx *cli.Context) error {
-					fmt.Println(ctx.App.Version)
-					return nil
-				},
+				Action:  commands.Version,
 			},
 			{
 				Name:        "install",
@@ -38,10 +35,7 @@ func main() {
 						Usage:   "name of the file to install",
 					},
 				},
-				Action: func(ctx *cli.Context) error {
-					commands.Install(ctx)
-					return nil
-				},
+				Action: commands.Install,
 			},
 			{
 				Name:        "source",
@@ -60,10 +54,7 @@ func main() {
 						Usage:   "url of the source",
 					},
 				},
-				Action: func(ctx *cli.Context) error {
-					commands.Source(ctx)
-					return nil
-				},
+				Action: commands.Source,
 			},
 			{
 				Name:    "update-self",
@@ -78,6 +69,13 @@ func main() {
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
+		var errorString = err.Error()
+
+		if errorNumber, err := strconv.Atoi(errorString); err == nil {
+			os.Exit(errorNumber)
+		}
+
+		color.Redln(errorString)
+		os.Exit(1)
 	}
 }
